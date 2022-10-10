@@ -1,0 +1,50 @@
+
+from collections import deque
+
+
+def riverSizes(matrix):
+    sol = []
+    nodes = deque()
+    nodes.append((matrix[0][0],0,0,1))
+    visited = set()
+    visited.add(matrix[0][0])
+    while len(nodes):
+        current, col, row, length = nodes.popleft()
+        if append_all_valid_neighbors(matrix,nodes,current,col,row,length,visited) == False:
+            sol.append(length)
+        else:
+            append_all_valid_neighbors(matrix, nodes, current, col, row, length, visited)
+    return sol
+
+
+def append_all_valid_neighbors(matrix, nodes, current, col, row, length,visited):
+    have_valid_neighbr = False
+    if matrix[col+1][row] and matrix[col+1][row]==1 and matrix[col+1][row] not in visited:
+        nodes.append((matrix[col+1][row], col+1, row, length + 1))
+        visited.add(matrix[col+1][row])
+        have_valid_neighbr = True
+    if matrix[col][row+1] and matrix[col][row+1]==1 and matrix[col][row+1] not in visited:
+        nodes.append(matrix[col][row+1],col, row+1, length + 1)
+        visited.add(matrix[col][row+1])
+        have_valid_neighbr = True
+    if matrix[col-1][row] and matrix[col-1][row]==1 and matrix[col-1][row] not in visited:
+        nodes.append(matrix[col-1][row], col-1, row, length + 1)
+        visited.add(matrix[col-1][row])
+        have_valid_neighbr = True
+    if matrix[col][row-1] and matrix[col][row-1]==1 and matrix[col][row-1] not in visited:
+        nodes.append(matrix[col][row-1], col, row-1, length + 1)
+        visited.add(matrix[col][row-1])
+        have_valid_neighbr = True
+    return have_valid_neighbr
+
+
+print(riverSizes([[1,0,0,1,0],[1,0,1,0,0],[0,0,1,0,1],[1,0,1,0,1],[1,0,1,1,0]]))
+
+
+
+
+
+
+Recollection:
+
+I have very similar solution to the one that is shown as the answer, but I am not sure how to check to see what is going wrong with my current solution
